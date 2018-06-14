@@ -1,0 +1,227 @@
+page-home-map {
+
+    ion-header {
+        background-color: rgba(255,255,255,0.5);
+    }
+
+	a[href*="google.com/"], .gmnoprint {
+		display: none !important
+	}
+
+	.scroll-content {
+      height: 100%
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+	  /*background: #a9e4fc;*/
+    }
+
+    .map-menu {
+        top: 0;
+        color: #636363;
+        font-size: 3.5rem;
+        ion-icon {
+            color: #636363;
+            font-size: 3.5rem;
+        }
+        .fab-close-icon  {
+            color: #636363;
+            font-size: 5rem
+        }
+    }
+
+    .locate {
+        .locate-btn {
+            left: 82%;
+        }
+        ion-icon {
+            color: #636363;
+            font-size: 3.5rem;
+            margin-bottom: 0px;
+		    }
+        ion-col {
+          //max-width: 16%
+        }
+        .vehicles {
+          position: absolute;
+          top: 0;
+          left: 17%;
+          ion-icon {
+            color: rgba(#636363, 0.6);
+            &.enabled {
+              color: rgba(#636363, 1);
+            }
+          }
+        }
+    }
+
+
+   .scroll-content {
+  		margin-top:0px !important;
+	}
+
+	.fab {
+        border-radius: 0%;
+	}
+
+    .fab-close-icon {
+        transform: scale(1.5) rotateZ(0deg);
+    }
+
+	.right-btn-list {
+		bottom: 70px;
+	}
+
+	.acti {
+		 width: 60px;
+    	 height: 62px;
+    	 padding-left: 0px;
+		 background-color: transparent;
+		 box-shadow: none;
+		 margin-right: 6px;
+			.button-inner{
+				width: 55px;
+    			height: 55px;
+    	}
+    	box-shadow: none;
+	}
+	ion-header{
+		.button-clear-ios, .button-clear-md {
+			color: #000000;
+		}
+
+	}
+
+	.fab-ios.fab-in-list  {
+        background-color: transparent;
+        width: 70px
+
+    }
+
+	.fab-ios.activated {
+        background-color: transparent;
+    }
+
+    .fab-md.activated {
+        background-color: transparent;
+    }
+
+	.fab-md.fab-in-list{
+	    background-color: transparent;
+	}
+
+	.fab-ios, .fab-md {
+		color: #000;
+		margin-bottom: 0px;
+
+	}
+
+	.newt {
+		/*position: absolute;
+    	right: 10px;
+		width: 42px;
+    	height: 42px;
+    	display: block;
+    	margin-top: 4px;
+    	margin-bottom: 5px;*/
+    	display: flex;
+    	justify-content: flex-end;
+    	align-items: center;
+    	width: 42px;
+    	height: 42px;
+	}
+
+	.fab-in-list.show {
+		width: 57px;
+    	height: 57px;
+	}
+
+	.newtrip {
+	   
+        width: 220px;
+        height: 60px;
+        border-radius: 200px 200px 200px 200px;
+        //height:50%;
+        //top: 0;
+        background: linear-gradient(to bottom, #7FC3F8 0%,#7FC3F8 50%,#5C9DE7 50%,#5C9DE7 100%);
+       		.button-inner{
+				justify-content: space-around;
+    		}
+	}
+
+	.trip-details-btn {
+        width: 90%;
+        height: 60px;
+        border-radius: 200px 200px 200px 200px;
+        background: linear-gradient(to bottom, #7FC3F8 0%,#7FC3F8 50%,#5C9DE7 50%,#5C9DE7 100%);
+		color: white;
+		padding: 10px 0;
+		.button-inner {
+			justify-content: space-around;
+		}
+
+		span {
+			display: block;
+			color: white;
+			line-height: 1.5;
+		}
+
+		img {
+			max-width: 26px;
+			width: 26px;
+			display: block;
+			margin: 0 auto;
+		}
+
+		button {
+			background: transparent;
+			padding: 0;
+			margin: 0;
+			display: inline-block;
+			width: 32%;
+			vertical-align: top;
+			width: calc(100% / 2);
+			&:first-child {
+				width: calc(100% / 4);
+				float: left;
+			}
+			&:last-child {
+				width: calc(100% / 4);
+				float: right;
+			}
+			.text {
+				font-size: 1.2em;
+				line-height: 1.2;
+			}
+		}
+
+	}
+
+	.newtrip .text {
+        color:#fff;
+        font-size: 1.3em;
+        font-weight: bold
+    }
+
+	#map_canvas.show-map {
+  		opacity: 1;
+	}
+
+    .scroll{
+		height: 100%;
+	}
+
+
+}
+
+	.head{
+		background-color: #FFFFFF;
+		width: 100%;
+		height: 20%;
+	}
+
+	ion-app._gmaps_cdv_ .nav-decor {
+	background-color: transparent !important;
+	}

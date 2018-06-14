@@ -1,0 +1,97 @@
+<ion-header class="locate">
+
+    <ion-fab class="map-menu">
+        <button ion-fab class="acti" clear>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-fab-list>
+          <button ion-fab class="acti" (click)="startNewTrip()">
+            <img  src="assets/icons/route.png">
+          </button>
+          <button ion-fab class="acti" *ngIf="isInTrip">
+            <img src="assets/icons/routeedit.png">
+          </button>
+          <button ion-fab class="acti" (click)="openSavedTrips()">
+            <img src="assets/home-map/menu-star-icon.png">
+          </button>
+          <button ion-fab class="acti" (click)="openInfo()">
+            <img src="assets/home-map/menu-info-icon.png">
+          </button>
+        </ion-fab-list>
+    </ion-fab>
+
+    <div class="vehicles" *ngIf="isInTrip">
+      <ion-row>
+        <ion-col width-20>
+          <button ion-button clear>
+              <ion-icon name="md-walk" [ngClass]="{'enabled': currentTripDetails.request.travelMode === 'WALKING'}"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col width-20>
+          <button ion-button clear>
+              <ion-icon name="md-bicycle" [ngClass]="{'enabled': currentTripDetails.request.travelMode === 'BICYCLING'}"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col width-20>
+          <button ion-button clear>
+              <ion-icon name="md-car" [ngClass]="{'enabled': currentTripDetails.request.travelMode === 'DRIVING'}"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col width-20>
+          <button ion-button clear>
+              <ion-icon name="md-bus" [ngClass]="{'enabled': currentTripDetails.request.travelMode === 'TRANSIT'}"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <ion-navbar hideBackButton>
+      <button ion-button clear (click)="centerMap()" class="locate-btn">
+        <ion-icon ios="md-locate" md="md-locate"></ion-icon>
+      </button>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="home-map">
+
+	<ion-fab left bottom *ngIf="!isInTrip">
+   		<button ion-fab class="newtrip" (click)="startNewTrip()">
+   			    <span class="bg"></span>
+    			<span class="text">Create New Trip</span>
+    			<img class="newt" src="assets/icons/new-trip-icon.png">
+   		</button>
+ 	</ion-fab>
+
+	 <ion-fab bottom left class="trip-details-btn" *ngIf="isInTrip">
+		 <button ion-fab>
+			 	<img src="assets/icons/svg/museum.svg">
+				<span>19:30</span>
+			</button>
+
+			<button ion-fab>
+			 	<span class="text">{{currentTripDetails.routes[0].legs[0].start_address}}</span>
+				<span class="text">To: {{currentTripDetails.routes[0].legs[0].end_address}}</span>
+			</button>
+
+			<button ion-fab>
+			 	<img src="assets/icons/svg/arrow.svg">
+				<span>{{currentTripDetails.routes[0].legs[0].distance.text}}</span>
+			</button>
+ 	</ion-fab>
+
+ 	 <ion-fab right bottom class="right-btn-list">
+			<button ion-fab class="acti"  (click)="openDetails()">
+   			<img  src="assets/icons/list.png">
+   		</button>
+   		<button ion-fab class="acti" (click)="openActivities()">
+   			<img  src="assets/icons/activity-icon.png">
+   		</button>
+       <button ion-fab class="acti" (click)="openActivityDetails()">
+   			<img  src="assets/icons/goto.png">
+   		</button>
+ 	</ion-fab>
+
+ 	<span class="head"></span>
+	<div #map id="map"></div>
+</ion-content>
