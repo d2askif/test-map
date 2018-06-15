@@ -1,5 +1,9 @@
 
 
 <ion-content>
+  
+    <ion-searchbar  [(ngModel)]="autocomplete.input"  showCancelButton="true" (ionInput)="updateSearchResults()"></ion-searchbar>
+  
+   
   <div #map id="map"></div>
 </ion-content>

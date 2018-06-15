@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Platform, NavController, AlertController} from "ionic-angular";
 import { Geolocation ,GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
 import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, LocationService, GoogleMapOptions, MyLocation, GoogleMapsMapTypeId } from '@ionic-native/google-maps';
-
+declare var google: any;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -12,7 +12,7 @@ export class HomePage {
   @ViewChild('map')
   private mapElement:ElementRef;
   private locations:Array<any> = [];
- private location:LatLng;
+  private location:LatLng;
   public map: GoogleMap;
   public directionsService: any;
   public directionsDisplay: any;
@@ -24,7 +24,17 @@ export class HomePage {
   currentPos : Geoposition;
   googleMaps:GoogleMaps;
 
+  GoogleAutocomplete:any;
+  autocomplete :any;
+  autocompleteItems:any;
   constructor(private platform:Platform,public navCtrl: NavController,private geolocation : Geolocation) {
+    this.autocomplete = { input: '' };
+      this.autocompleteItems = [];
+    this.platform.ready().then(()=>{
+      this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+      
+    });
+     
 
   }
   
@@ -77,7 +87,10 @@ export class HomePage {
     });
   }
 
- 
+  updateSearchResults(){
+    console.log('autocomplet');
+    
+  }
 
 
  
