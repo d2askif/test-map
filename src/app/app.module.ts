@@ -10,12 +10,14 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HomeMapPage } from '../pages/home-map/home-map';
 import { GMap } from '../services/gmap.service';
+import { SignInPage } from '../pages/sign-in/sign-in';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    HomeMapPage
+    HomeMapPage,
+    SignInPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { GMap } from '../services/gmap.service';
   entryComponents: [
     MyApp,
     HomePage,
-    HomeMapPage
+    HomeMapPage,
+    SignInPage
   ],
   providers: [
     StatusBar,

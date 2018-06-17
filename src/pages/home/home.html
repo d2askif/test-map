@@ -2,8 +2,13 @@
 
 <ion-content>
   
-    <ion-searchbar  [(ngModel)]="autocomplete.input"  showCancelButton="true" (ionInput)="updateSearchResults()"></ion-searchbar>
-  
+    <ion-searchbar  [(ngModel)]="autocomplete.input"  showCancelButton="true" (ionInput)="updateSearchResults()" id='searchInput' (ionCancel)="onSearchCancel()" (ionClear)="onSearchClear()"></ion-searchbar>
+    <ion-list  *ngIf="autocompleteItems.length > 0" margin-right>
+      <ion-item>Current location</ion-item>
+        <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
+          {{ item.description }}
+        </ion-item>
+      </ion-list>
    
   <div #map id="map"></div>
 </ion-content>
