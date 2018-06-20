@@ -8,10 +8,12 @@ import { place } from "../models/place";
 import GeoFire from 'geofire';
 @Injectable()
 export class DataService {
-  
+  private geoFire;
+  private firebaseRef;
   
   constructor(private httpClient: HttpClient){
- 
+    this.firebaseRef = firebase.database().ref('map/');
+    this.geoFire = new GeoFire(this.firebaseRef);
   }
   addItem(name: string, amount: number) {
     
@@ -42,31 +44,54 @@ export class DataService {
 
   }
   load(){
-    let firebaseRef = firebase.database().ref().push();
-     let usersRef = firebaseRef.child('x');
-     usersRef.set({
-      alanisawesome: {
-        date_of_birth: "June 23, 1912",
-        full_name: "Alan Turing"
-      },
-      gracehop: {
-        date_of_birth: "December 9, 1906",
-        full_name: "Grace Hopper"
-      }
-    }).then(()=>{
-      alert('success');
-    }).catch(()=>{
-      alert('error');
-    });
-    let geoFire = new GeoFire(firebaseRef);
+    // let firebaseRef = firebase.database().ref('map/')
+    //  let usersRef = firebaseRef.child('x');
+    //  usersRef.set({
+    //   alanisawesome: {
+    //     date_of_birth: "June 23, 1912",
+    //     full_name: "Alan Turing"
+    //   },
+    //   gracehop: {
+    //     date_of_birth: "December 9, 1906",
+    //     full_name: "Grace Hopper"
+    //   }
+    // }).then(()=>{
+    //   alert('success');
+    // }).catch(()=>{
+    //   alert('error');
+    // });
    
     
-    geoFire.set("some_key", [37.79, -122.41]).then(function() {
+    this.geoFire.set("some_key", [32.345, -122.41]).then(function() {
       alert('success');
       console.log("Provided key has been added to GeoFire");
     }, function(error) {
       alert('error');
       console.log("Error: " + error);
     });
+  }
+
+  addToGeoFire(pos){
+    
+    this.geoFire.set("key" , [pos.lat,pos.lng]).then(() =>{
+      alert('success');
+      console.log("Provided key has been added to GeoFire");
+    }).catch(()=>{
+      alert('error');
+    });
+  }
+  search(){
+     let Query = this.geoFire.query({
+      center: [55.6460162, 12.2979366],
+      radius: 12
+    });
+   let keyEnteered= Query.on('key_entered',(key, location, distance)=>{
+      alert(distance);
+  });
+  let ready = Query.on('ready',()=>{
+    alert('ready');
+});
+  
+
   }
 }

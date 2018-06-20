@@ -28,6 +28,7 @@ export class HomePage {
   options : GeolocationOptions;
   currentPos : Geoposition;
   googleMaps:GoogleMaps;
+  private locationPos:LatLng;
 
   GoogleAutocomplete:any;
   autocomplete :any;
@@ -64,6 +65,7 @@ export class HomePage {
            zoom:true,
            mapToolbar:true
           },
+          
           camera:{
             target:myLocation.latLng
           }
@@ -88,7 +90,8 @@ export class HomePage {
       title: 'My Marker',
       icon: 'blue',
       animation: 'DROP',
-      position: this.location
+      position: this.location,
+    
     })
     .then(marker => {
       marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
@@ -143,7 +146,7 @@ export class HomePage {
     Geocoder.geocode(options)
     .then((results: GeocoderResult[]) => {
       console.log(results);
-    
+      this.locationPos = new LatLng(results[0].position.lat,results[0].position.lng);
        this.map.addMarker({
         'position': results[0].position,
         'title':  JSON.stringify(results[0].position)
@@ -168,6 +171,13 @@ export class HomePage {
     //   alert(data.price)
     // })
     // });
+  }
+  addToGeoFire() {
+   this.dataService.addToGeoFire({lat:this.locationPos.lat,lng:this.locationPos.lng});
+  }
+
+  search() {
+    this.dataService.search();
   }
   
 }
