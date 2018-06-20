@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 
@@ -15,14 +15,16 @@ import firebase from 'firebase';
   templateUrl: 'sign-in.html',
 })
 export class SignInPage {
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignInPage');
+    
+    
   }
 signin(){
  firebase.auth().signInWithEmailAndPassword("test123@gmail.com","123456");
 }
+
 }

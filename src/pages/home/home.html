@@ -1,14 +1,25 @@
 
 
 <ion-content>
-  
-    <ion-searchbar  [(ngModel)]="autocomplete.input"  showCancelButton="true" (ionInput)="updateSearchResults()" id='searchInput' (ionCancel)="onSearchCancel()" (ionClear)="onSearchClear()"></ion-searchbar>
+  <ion-fab bottom right >
+    <button ion-fab (click)="load()" >Load</button>
+    
+  </ion-fab>
+
+  <ion-fab bottom left >
+    <button ion-fab (click)="logOut()">Logout</button>
+    
+  </ion-fab>
+
+    <ion-searchbar  [(ngModel)]="autocomplete.input"  showCancelButton="true" (ionInput)="updateSearchResults($event)" id='searchInput' (ionCancel)="onSearchCancel()" (ionClear)="onSearchClear()"></ion-searchbar>
     <ion-list  *ngIf="autocompleteItems.length > 0" margin-right>
       <ion-item>Current location</ion-item>
         <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
           {{ item.description }}
         </ion-item>
       </ion-list>
+
+
    
   <div #map id="map"></div>
 </ion-content>

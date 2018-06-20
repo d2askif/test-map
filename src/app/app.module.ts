@@ -11,6 +11,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HomeMapPage } from '../pages/home-map/home-map';
 import { GMap } from '../services/gmap.service';
 import { SignInPage } from '../pages/sign-in/sign-in';
+import { DataService } from '../services/data.service';
+import { AuthService } from '../services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { SignInPage } from '../pages/sign-in/sign-in';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -36,6 +40,8 @@ import { SignInPage } from '../pages/sign-in/sign-in';
     GoogleMaps,
     Geolocation,
     GMap,
+    AuthService,
+    DataService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,7 +1,11 @@
 import {Component, ElementRef, ViewChild,NgZone} from '@angular/core';
-import {Platform, NavController, AlertController} from "ionic-angular";
+import {Platform, NavController, AlertController, LoadingController} from "ionic-angular";
 import { Geolocation ,GeolocationOptions ,Geoposition ,PositionError } from '@ionic-native/geolocation'; 
 import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, LocationService, GoogleMapOptions, MyLocation, GoogleMapsMapTypeId, Geocoder, GeocoderResult, GeocoderRequest } from '@ionic-native/google-maps';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
+import { place } from '../../models/place';
 declare var google: any;
 @Component({
   selector: 'page-home',
@@ -28,14 +32,23 @@ export class HomePage {
   GoogleAutocomplete:any;
   autocomplete :any;
   autocompleteItems:any;
-  constructor(private zone:NgZone,private platform:Platform,public navCtrl: NavController,private geolocation : Geolocation) {
+  constructor(private alertCtr:AlertController,
+     private zone:NgZone,
+     private platform:Platform,
+     public navCtrl: NavController,
+     private geolocation : Geolocation,
+     private authService:AuthService,
+     private dataService:DataService,
+     private loadCtrl:LoadingController) {
     this.autocomplete = { input: '' };
     this.autocompleteItems = [];
+    
    }
   
     
   ionViewDidLoad() {
     this.platform.ready().then(() => {
+     let input = document.getElementById('searchInput');
      
       this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
       LocationService.getMyLocation()
@@ -84,16 +97,23 @@ export class HomePage {
     });
   }
 
-  updateSearchResults(){
+  updateSearchResults(event){
     
+  // TODO: 
+   // use Observeable to minimize api call by using debunce and filter and other rxjs objects 
     if(this.autocomplete.input =='') {
       this.autocompleteItems = [];
       return ;
     }
+    if((this.autocomplete.input.split('')).length<3) { //check input length
+      return; 
+    }
+   
      
     this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
       (predictions:google.maps.places.AutocompletePrediction[], status) => {
         this.autocompleteItems = [];
+      
         this.zone.run(() => {
           predictions.forEach((prediction:google.maps.places.AutocompletePrediction) => {
             console.log(prediction);
@@ -132,6 +152,22 @@ export class HomePage {
       });
     })
 
+  }
+  logOut() {
+   this.authService.sinout();
+   
+  }
+  load(){ 
+    alert('load');
+    this.dataService.load();
+    // const loader = this.loadCtrl.create({content:'Loading Data'});
+    // loader.present();
+    // this.authService.getActiveUser().getIdToken().then((token:string)=>{
+    // this.dataService.getItems(token).subscribe((data:place)=>{
+    //     loader.dismiss();
+    //   alert(data.price)
+    // })
+    // });
   }
   
 }

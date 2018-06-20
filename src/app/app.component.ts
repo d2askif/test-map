@@ -12,10 +12,14 @@ import { SignInPage } from '../pages/sign-in/sign-in';
   templateUrl: 'app.html'
 })
 export class MyApp {
-    config = {
-      apiKey: "AIzaSyDLzWQJKuU852J3M8cqcx-UtTsouCt12NE",
-      authDomain: "test-bc7e2.firebaseapp.com"
-    };
+  config = {
+    apiKey: "AIzaSyDLzWQJKuU852J3M8cqcx-UtTsouCt12NE",
+    authDomain: "test-bc7e2.firebaseapp.com",
+    databaseURL: "https://test-bc7e2.firebaseio.com",
+    projectId: "test-bc7e2",
+    storageBucket: "test-bc7e2.appspot.com",
+    messagingSenderId: "1041679653764"
+  };
   signin = SignInPage;
   homePage = HomePage;
   currentPage: any;
