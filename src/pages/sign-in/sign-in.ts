@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
+import { NgForm } from '@angular/forms';
+import { SignUpPage } from '../sign-up/sign-up';
 
 /**
  * Generated class for the SignInPage page.
@@ -23,8 +25,13 @@ export class SignInPage {
     
     
   }
-signin(){
- firebase.auth().signInWithEmailAndPassword("test123@gmail.com","123456");
+signin(f:NgForm){
+  console.log(f);
+  
+ firebase.auth().signInWithEmailAndPassword(f.value.email,f.value.password);
+}
+signup(){
+  this.navCtrl.push(SignUpPage);
 }
 
 }

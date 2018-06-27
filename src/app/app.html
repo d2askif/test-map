@@ -1,1 +1,52 @@
-<ion-nav [root]="currentPage"></ion-nav>
+
+<ion-menu [content]="nav">
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Gojo +</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  
+  
+    <ion-content>
+      <div style="padding-top:20px;" text-center *ngIf="isAuthenticated">
+  
+        <img style="width:40%; border:1px solid #ededed; border-radius: 50%;" [src]="photoUrl">
+        <div>
+          <span style="font-size: 16px;">"Daniel K"</span>
+        </div>
+        <div>
+          <span>Loged in</span>
+        </div>
+        <ion-item-divider margin-left></ion-item-divider>
+      </div>
+      <ion-list>
+          
+        <button ion-item icon-left (click)="onLoad(homePage)" *ngIf="isAuthenticated" [class.active]="checkActive(tab)">
+          <ion-icon name="book"></ion-icon>
+  
+          Find places
+        </button>
+        <button ion-item icon-left (click)="onLoad(signin)" *ngIf="!isAuthenticated" [class.active]="checkActive(signin)">
+          <ion-icon name="log-in"></ion-icon>
+          Sign In
+        </button>
+        <button ion-item icon-left (click)="onLoad(signup)" *ngIf="!isAuthenticated" [class.active]="checkActive(signup)">
+          <ion-icon name="person"></ion-icon>
+          Sign Up
+        </button>
+  
+        <button ion-item icon-left (click)="onLogOut()" *ngIf="isAuthenticated">
+          <ion-icon name="log-out"></ion-icon>
+          Log out
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  <ion-nav [root]="tab" #nav></ion-nav>
+  
+
+
+
+

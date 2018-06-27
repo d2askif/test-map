@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, NavController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
-import { HomeMapPage } from '../pages/home-map/home-map';
 import * as firebase from 'firebase';
 import { SignInPage } from '../pages/sign-in/sign-in';
+import { AuthService } from '../services/auth.service';
+import { SignUpPage } from '../pages/sign-up/sign-up';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,11 +20,19 @@ export class MyApp {
     storageBucket: "test-bc7e2.appspot.com",
     messagingSenderId: "1041679653764"
   };
+  isAuthenticated = false;
+  displayName = 'user';
+  photoUrl= './assets/profile.png';
   signin = SignInPage;
-  homePage = HomePage;
+  tab = TabsPage;
+  signup = SignUpPage
   currentPage: any;
-
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  @ViewChild('nav') nav:NavController;
+  constructor( platform: Platform, 
+               statusBar: StatusBar,
+               splashScreen: SplashScreen,
+               private menuCtrl: MenuController,
+               private authServise:AuthService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -35,11 +43,34 @@ export class MyApp {
     firebase.initializeApp(this.config);
     firebase.auth().onAuthStateChanged(user=>{
        if(user){
-         this.currentPage = this.homePage;
+        this.nav.setRoot(this.tab);
+         this.currentPage = this.tab;
+         this.isAuthenticated = true;
        } else {
+        this.nav.setRoot(this.signin);
         this.currentPage = this.signin;
+        this.isAuthenticated = false;
        }
     })
+  }
+
+
+
+  onLoad(page:any){
+    this.currentPage = page;
+   this.nav.setRoot(page);
+   this.menuCtrl.close();
+  }
+  onLogOut(){
+    this.authServise.sinout()
+    .then()
+    .catch((error)=>{
+      console.log( 'log out failed'+  error);
+      });
+      this.menuCtrl.close();
+  }
+  checkActive(page:any){
+  return this.currentPage == page;
   }
 }
 

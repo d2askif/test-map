@@ -1,0 +1,131 @@
+<!-- <ion-header>
+ 
+  <ion-navbar color="secondary">
+    <ion-title>Create Account</ion-title>
+  </ion-navbar>
+ 
+</ion-header>
+ 
+ 
+<ion-content padding>
+ 
+  <ion-row class="account-form">
+    <ion-col>
+      <ion-list no-lines>
+ 
+        <ion-item>
+          <ion-label><ion-icon name="logo-usd" item-left></ion-icon></ion-label>
+          <ion-input [(ngModel)]="name" placeholder="Price" type="text"></ion-input>
+        </ion-item>
+ 
+        <ion-item>
+          <ion-label><ion-icon name="person" item-left></ion-icon></ion-label>
+          <ion-input [(ngModel)]="username" placeholder="Numbe of living rooms" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label><ion-icon name="person" item-left></ion-icon></ion-label>
+          <ion-input [(ngModel)]="username" placeholder="Number of bed rooms" type="number"></ion-input>
+        </ion-item>
+ 
+        <ion-item>
+          <ion-label><ion-icon name="pin" item-left></ion-icon></ion-label>
+          <ion-input [(ngModel)]="email" placeholder="Address" type="email"></ion-input>
+        </ion-item>
+ 
+        
+ 
+        <ion-item>
+          <ion-label>Type</ion-label>
+          <ion-select [(ngModel)]="gender">
+            <ion-option value="f">Female</ion-option>
+            <ion-option value="m">Male</ion-option>
+            <ion-option value="m">Couple</ion-option>
+            <ion-option value="m">Single</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Rent</ion-label>
+          <ion-select [(ngModel)]="gender">
+            <ion-option value="studio">Studio</ion-option>
+            <ion-option value="room-mate">Room Mate</ion-option>
+            <ion-option value="villa">Villa</ion-option>
+            <ion-option value="apartment">Appartment</ion-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-list>
+ 
+      <button ion-button (click)="register()" class="continue-button">Add</button>
+ 
+    </ion-col>
+  </ion-row>
+
+</ion-content> -->
+<ion-header >
+    <!-- <ion-navbar>
+        <button ion-button icon-only menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+      <ion-title>sign-in</ion-title>
+    </ion-navbar> -->
+    <ion-toolbar transparent
+                 text-center>
+  
+                 <h3 style="color:#fff">Add a place</h3>
+  
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+  
+<form #f="ngForm" (ngSubmit)="addPlace(f)">
+  <ion-list no-lines>
+<ion-item  id="round-item">
+  <ion-label  color="white"><ion-icon color="white" name="ios-person-outline" item-left></ion-icon> </ion-label>
+<ion-input class="input" require ngModel type="number" placeholder="price" name="price"></ion-input>
+</ion-item>
+<ion-item>
+
+  <ion-label color="white"><ion-icon color="white" name="ios-person-outline" item-left></ion-icon> </ion-label>
+
+  <ion-input  name="bedroom" placeholder="no. bed room" required [minlength]="6" ngModel type="number"></ion-input>
+
+</ion-item>
+
+
+
+
+
+
+<ion-item>
+    <ion-label><ion-icon color="white" name="pin" item-left></ion-icon></ion-label>
+    <ion-input ngModel placeholder="address" type="email" name="address"></ion-input>
+  </ion-item>
+
+  
+
+  <ion-item>
+    <ion-label color="#dedede">Type</ion-label>
+    <ion-select  ngModel name="typeSelect">
+      <ion-option value="f">Female</ion-option>
+      <ion-option value="m">Male</ion-option>
+      <ion-option value="m">Couple</ion-option>
+      <ion-option value="m">Single</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label color="#dedede">Rent</ion-label>
+    <ion-select ngModel name="typeApartment">
+      <ion-option value="studio">Studio</ion-option>
+      <ion-option value="room-mate">Room Mate</ion-option>
+      <ion-option value="villa">Villa</ion-option>
+      <ion-option value="apartment">Appartment</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-list>
+<button margin-top block   color="white"  outline ion-button type="submit" [disabled]="!f.valid">Sign in</button>
+
+
+        </form>
+</ion-content>

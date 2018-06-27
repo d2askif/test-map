@@ -14,25 +14,38 @@ import { SignInPage } from '../pages/sign-in/sign-in';
 import { DataService } from '../services/data.service';
 import { AuthService } from '../services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SignUpPage } from '../pages/sign-up/sign-up';
+import { TabsPage } from '../pages/tabs/tabs';
+import { AddPlacePage } from '../pages/add-place/add-place';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     HomeMapPage,
-    SignInPage
+    SignInPage, 
+    SignUpPage,
+    TabsPage,
+    AddPlacePage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      scrollPadding:false,
+      scrollAssist: true,
+      autoFocusAssist: false}
+    )
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     HomeMapPage,
-    SignInPage
+    SignInPage,
+    SignUpPage,
+    TabsPage,
+    AddPlacePage
   ],
   providers: [
     StatusBar,

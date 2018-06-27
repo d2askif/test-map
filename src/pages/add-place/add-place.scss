@@ -1,0 +1,78 @@
+page-add-place {
+   
+    // align the form horizontally
+    // .scroll-content {
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     flex-direction: column;
+    // }
+    .input { padding: 0; margin: 0; 
+        color:#fff;
+    }
+    // make the form adjust to the full width
+    form {
+        
+    }
+    
+    // adds the soothing gradient to the background of the page
+        .content {
+            overflow: hidden;
+            background: linear-gradient(270deg, rgb(251, 173, 80), rgb(233, 89, 80), rgb(73, 102, 215));    
+            background-size: 1200% 100%;
+           -webkit-animation: MovingBackground 60s ease infinite;
+           -moz-animation: MovingBackground 60s ease infinite;
+           animation: MovingBackground 60s ease infinite;  
+        }
+     // give inputs a light background color
+     .item-ios,
+     .item-md  {
+         height:42px;
+         padding:0px;
+         padding-left:16px;
+         border:1px solid #fff;
+         border-radius: 4px;
+         background-color: color($colors, white-transparent, base);  
+         color:#fff;
+         margin-bottom:16px;
+     }
+    
+     .list-md, .list-ios{
+        .item-block .item-inner{
+            border-bottom-width: 0;
+        }
+     } 
+    
+     // give the footer a white transparent border
+     .footer-ios .toolbar-background-ios {
+         border-color: color($colors, white-transparent, base);  
+     }
+     
+     /** fixes **/      
+     // if a list has a no-line directive, the last item still shows
+     // a bottom border, so hide it
+     .list-md[no-lines] .item-input:last-child {
+         border-width: 0;
+     }    
+    
+     // handles the moving part of the background
+     @-webkit-keyframes MovingBackground {
+         0% { background-position: 0% 50% }
+         50% { background-position: 100% 50% }
+         100% { background-position: 0% 50% }
+     }
+    
+     @-moz-keyframes MovingBackground {
+         0% { background-position: 0% 50% }
+         50% { background-position: 100% 50% }
+         100% { background-position: 0% 50% }
+     }
+    
+     @keyframes MovingBackground { 
+         0% { background-position: 0% 50% }
+         50% { background-position: 100% 50% }
+         100% { background-position: 0% 50% }
+     }
+    
+    }
+    
