@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 
@@ -17,15 +17,33 @@ import { DataService } from '../../services/data.service';
 })
 export class AddPlacePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private dataService:DataService) {
-  }
+  constructor( public navCtrl: NavController, 
+               public navParams: NavParams,
+               private dataService:DataService,
+              private loderCtrl:LoadingController
+              ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddPlacePage');
   }
 
 addPlace(f:NgForm){
-  this.dataService.storeList();
+  let loader = this.loderCtrl.create();
+  loader.present();
+  this.dataService.storeList().then(()=>{
+        console.log('complet');
+        this.dataService.load().then(()=>{
+          loader.dismiss();
+        }).catch((error)=>{
+          alert(error.message);
+          loader.dismiss();
+        });
+       
+         }).catch((error)=>{
+           loader.dismiss();
+        console.log(error);
+  });
+  
   console.log(f.value.price)
 }
 

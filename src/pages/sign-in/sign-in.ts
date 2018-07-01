@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
 import { NgForm } from '@angular/forms';
 import { SignUpPage } from '../sign-up/sign-up';
@@ -17,7 +17,10 @@ import { SignUpPage } from '../sign-up/sign-up';
   templateUrl: 'sign-in.html',
 })
 export class SignInPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor( public navCtrl: NavController, 
+               public navParams: NavParams,
+               private loaderCtrl:LoadingController
+              ) {
   }
 
   ionViewDidLoad() {
@@ -27,8 +30,14 @@ export class SignInPage {
   }
 signin(f:NgForm){
   console.log(f);
-  
- firebase.auth().signInWithEmailAndPassword(f.value.email,f.value.password);
+ let loader = this.loaderCtrl.create()
+ loader.present();
+ firebase.auth().signInWithEmailAndPassword(f.value.email,f.value.password).then(()=>{
+  loader.dismiss();
+ }).catch((error)=>{
+   loader.dismiss();
+ alert(error.message);
+ });
 }
 signup(){
   this.navCtrl.push(SignUpPage);

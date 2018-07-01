@@ -28,7 +28,10 @@ import {
   GoogleMapsMapTypeId,
   Geocoder,
   GeocoderResult,
-  GeocoderRequest
+  GeocoderRequest,
+  Circle,
+  MarkerCluster,
+  Marker
 } from '@ionic-native/google-maps';
 import {
   Observable
@@ -42,6 +45,7 @@ import {
 import {
   place
 } from '../../models/place';
+import { SettingsPage } from '../settings/settings';
 declare var google: any;
 @Component({
   selector: 'page-home',
@@ -67,7 +71,8 @@ export class HomePage {
   private locationPos: LatLng;
   private centerPos: LatLng;
   private searchRadius: number;
-
+  private circleArray: Array < Circle > ;
+  private circle: Circle;
   GoogleAutocomplete: any;
   autocomplete: any;
   autocompleteItems: any;
@@ -92,6 +97,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.platform.ready().then(() => {
+      
       this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
       LocationService.getMyLocation()
         .then((myLocation: MyLocation) => {
@@ -118,13 +124,16 @@ export class HomePage {
           this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
 
             this.addMarker(myLocation.latLng);
+
+            // this.addCircle(myLocation.latLng);
+
           })
         })
         .catch();
     });
-    this.dataService.key_enteredObservable$.subscribe((location) => {
+    this.dataService.key_enteredObservable$.subscribe((data) => {
       // alert(location);
-      if (location == null) {
+      if (data == false) {
         const toast = this.toastCtrl.create({
           message: 'No places found',
           duration: 3000
@@ -132,12 +141,23 @@ export class HomePage {
         toast.present();
         return;
       }
-      this.map.addMarker({
-        'position': new LatLng(location[0], location[1]),
-        'title': 'title'
-      }).then(() => {
-
+      alert('geba');
+      const toast = this.toastCtrl.create({
+        message: this.dataService.getNearByplaces().length + '',
+        duration: 3000
       });
+      toast.present();
+      this.addCluster();
+      // this.map.addMarker({
+
+      //   'position': new LatLng(data.location[0], data.location[1]),
+      //   'title': data.location + " "
+      // }).then(() => {
+
+      // });
+
+      //this.map.setCameraTarget(this.dataService.dummyData()[0].position);
+     // this.addCluster();
     })
   }
 
@@ -146,7 +166,9 @@ export class HomePage {
   addMarker(location: LatLng) {
     this.map.addMarker({
         title: 'My Marker',
-        icon: 'blue',
+        icon: {
+          'url': 'assets/home.png'
+        },
         animation: 'DROP',
         position: location,
 
@@ -211,6 +233,9 @@ export class HomePage {
         //this.map.addCircleSync({location:})
         this.map.setCameraTarget(this.locationPos);
         this.search(this.locationPos);
+        // this.addCircle(this.locationPos);
+
+
         //  this.map.addMarker({
         //   'position': results[0].position,
         //   'title':  JSON.stringify(results[0].position)
@@ -237,14 +262,76 @@ export class HomePage {
     // });
   }
   addToGeoFire() {
-    this.dataService.addToGeoFire({
-      lat: this.locationPos.lat,
-      lng: this.locationPos.lng
-    });
+    // this.dataService.addToGeoFire({
+    //   lat: this.locationPos.lat,
+    //   lng: this.locationPos.lng
+    // });
   }
 
   search(centerPos: LatLng) {
     this.dataService.search(centerPos, this.searchRadius);
   }
+
+  setting(){
+    this.navCtrl.push(SettingsPage);
+  }
+
+  addCircle(ILatLng) {
+    // Add circle
+    //  this.circleArray.forEach((value)=>{
+    //    value.remove();
+    //  });
+    // if(this.circleArray.pop() != undefined){
+    //   (this.circleArray.pop()).remove();
+    // }
+    if (this.circle != undefined) {
+      this.circle.setCenter(ILatLng);
+      this.map.animateCamera({
+        target: this.circle.getBounds()
+      });
+      return;
+    }
+    this.circle = this.map.addCircleSync({
+      'center': ILatLng,
+      'radius': 12000,
+      'strokeColor': '#488aff',
+      'strokeWidth': 2,
+      'fillColor': '#f9fafa',
+      'fillOpacity': 1
+    });
+
+
+    //this.circleArray.push(circle);
+  }
+
+addCluster(){
+ let markerCluster: MarkerCluster =  this.map.addMarkerClusterSync({
+    boundsDraw: false,
+    markers: this.dataService.dummyData(),
+    icons: [
+        {min: 2, max: 100, url: "assets/filled-circle.png", anchor: {x: 16, y: 16}, label: {
+          color: "white"
+       }
+      },
+        {min: 100, max: 1000, url: "assets/home.png", anchor: {x: 16, y: 16}, label: {
+          color: "white"
+        }},
+        { min: 1000, max: 2000, url: "assets/home.png", anchor: {x: 24, y: 24},
+        label: {
+          color: "white"
+        }
+      },
+        {min: 2000, url: "assets/home.png",anchor: {x: 32,y: 32}, label: {
+          color: "white"
+        }}
+    ]
+  });
+  markerCluster.on((GoogleMapsEvent.MARKER_CLICK)).subscribe((params)=>{
+    let marker: Marker = params[1];
+    marker.setTitle(marker.get("name"));
+    marker.setSnippet(marker.get("address"));
+    marker.showInfoWindow();
+  });
+}
 
 }

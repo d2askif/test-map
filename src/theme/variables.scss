@@ -40,6 +40,7 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   white-transparent: rgba(255,255,255, 0.2),
+  black-transparent: rgba(0,0,0, 0.2),
   white:      #fff
 );
 
@@ -51,7 +52,8 @@ $text-input-placeholder-color:#dedede;
 
 
 $label-ios-text-color:#dedede;
-
+$tabs-ios-tab-icon-color:white;
+$tabs-ios-tab-icon-color-active:white;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -62,6 +64,10 @@ $searchbar-md-input-box-shadow:0 2px 2px 0 rgba(0, 0, 0, .14);
 
 $text-input-md-show-focus-highlight:        false !default;
 $label-md-text-color:#dedede;
+
+
+$tabs-md-tab-icon-color:#888;
+$tabs-md-tab-icon-color-active:white; 
 
 /// @prop - Show the valid highlight when it is valid and has a value
 $text-input-md-show-valid-highlight:        $text-input-md-show-focus-highlight !default;

@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import { HomeMapPage } from '../home-map/home-map';
 import { AddPlacePage } from '../add-place/add-place';
 import { HomePage } from '../home/home';
+import { ListingsPage } from '../listings/listings';
 
 @Component({
   selector: 'page-tabs',
@@ -13,4 +14,6 @@ import { HomePage } from '../home/home';
 export class TabsPage {
   homeMapPage = HomePage;
   addPlace = AddPlacePage;
+  listingsPage= ListingsPage;
+
 }
