@@ -21,5 +21,9 @@ updateProfile(displayName,imgUrl){
  const user = firebase.auth().currentUser;
  return user.updateProfile({displayName:displayName,photoURL:imgUrl});
 }
+updatePhoneNumber(phoneNumber){
+  const user =  firebase.auth().currentUser;
+  return user.updatePhoneNumber(phoneNumber);
+}
 
 }

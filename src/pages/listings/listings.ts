@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DataService } from '../../services/data.service';
 
 /**
  * Generated class for the ListingsPage page.
@@ -14,8 +15,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'listings.html',
 })
 export class ListingsPage {
+  arrayOfResult:any=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private dataService:DataService) {
+   // this.arrayOfResult = this.dataService.result.slice();
+   this.dataService.getNearByplaces().forEach(place =>{
+   this.arrayOfResult.push(this.dataService.result[place.key]);
+   });
   }
 
   ionViewDidLoad() {

@@ -5,10 +5,57 @@ page-home {
 
 	}
     div{
-		height: 100%;
+		height: 95%;
 	}
 	ion-searchbar{
 	
 	}
-	
+	.pgm-html-info-tail-frame{
+		height: 20px;
+	}
+	.html-info-window{
+		*{margin: 0; padding: 0;}
+
+		div {
+			background-color: beige;
+		     margin: 4px;
+		}
+		
+		ul {
+		  list-style-type: none;
+		  width: 190px;
+		}
+		
+		h5 {
+		  font: bold 13px/1.5 Helvetica, Verdana, sans-serif;
+		  color:orange;
+		}
+		
+		li img {
+		  border:1px solid #dedede;
+		  float: left;
+		  margin: 0 15px 0 0;
+		  height:70px;
+		  width: 80px;
+		}
+		
+		li p {
+			font: 200 12px/1.5 Georgia, Times New Roman, serif;	
+		   color:#888;
+			}
+		
+		li {
+		  padding: 4px;
+		  overflow: auto;
+		}
+		
+		li:hover {
+		  background: #eee;
+		  cursor: pointer;
+		}
+
+	}
+	.fixed{ position: fixed;
+	  } .button-fab { z-index: 100; 
+	background: tomato}
 	}

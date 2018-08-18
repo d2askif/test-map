@@ -19,6 +19,11 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AddPlacePage } from '../pages/add-place/add-place';
 import { ListingsPage } from '../pages/listings/listings';
 import { SettingsPage } from '../pages/settings/settings';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Camera } from '@ionic-native/camera';
+import { Crop } from '@ionic-native/crop';
+import { ProfilePage } from '../pages/profile/profile';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,9 @@ import { SettingsPage } from '../pages/settings/settings';
     TabsPage,
     AddPlacePage,
     ListingsPage,
-    SettingsPage
+    SettingsPage,
+    ProfilePage,
+    EditProfilePage
   ],
   imports: [
     BrowserModule,
@@ -51,16 +58,21 @@ import { SettingsPage } from '../pages/settings/settings';
     TabsPage,
     AddPlacePage,
     ListingsPage,
-    SettingsPage
+    SettingsPage,
+    ProfilePage,
+    EditProfilePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     GoogleMaps,
     Geolocation,
+    ImagePicker,
     GMap,
     AuthService,
     DataService,
+    Camera,
+    Crop,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

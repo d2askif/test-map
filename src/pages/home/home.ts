@@ -31,7 +31,11 @@ import {
   GeocoderRequest,
   Circle,
   MarkerCluster,
-  Marker
+  Marker,
+  MarkerIcon,
+  MarkerClusterOptions,
+  MarkerOptions,
+  HtmlInfoWindow
 } from '@ionic-native/google-maps';
 import {
   Observable
@@ -46,13 +50,15 @@ import {
   place
 } from '../../models/place';
 import { SettingsPage } from '../settings/settings';
+import { ListingsPage } from '../listings/listings';
 declare var google: any;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  public loader:any;
+  private markerCluster2: MarkerCluster;
   @ViewChild('map')
   private mapElement: ElementRef;
   @ViewChild('searchInput') searchInput: ElementRef;
@@ -73,9 +79,12 @@ export class HomePage {
   private searchRadius: number;
   private circleArray: Array < Circle > ;
   private circle: Circle;
+
   GoogleAutocomplete: any;
   autocomplete: any;
   autocompleteItems: any;
+  total_markers=[];
+  htmlInfoWindow =  new HtmlInfoWindow();
   constructor(private alertCtr: AlertController,
     private zone: NgZone,
     private platform: Platform,
@@ -112,7 +121,9 @@ export class HomePage {
               indoorPicker: true,
               zoom: true,
               mapToolbar: true
+              
             },
+            styles: [{"stylers": [{ "saturation": -100 }]}],
 
             camera: {
               target: myLocation.latLng
@@ -139,43 +150,116 @@ export class HomePage {
           duration: 3000
         });
         toast.present();
+        this.loader.dismiss();
         return;
       }
-      alert('geba');
+     // alert('geba');
       const toast = this.toastCtrl.create({
         message: this.dataService.getNearByplaces().length + '',
         duration: 3000
       });
       toast.present();
-      this.addCluster();
-      // this.map.addMarker({
-
-      //   'position': new LatLng(data.location[0], data.location[1]),
-      //   'title': data.location + " "
-      // }).then(() => {
-
-      // });
-
-      //this.map.setCameraTarget(this.dataService.dummyData()[0].position);
-     // this.addCluster();
+     
+     
+     // this.addCluster2(); // adds cluster to the map if markers number is min 4 
+      this.dataService.getNearByplaces().forEach(item => {
+        this.addMarker2(item);
+      });
+ 
+      
+      this.loader.dismiss();
+     
     })
   }
 
 
 
   addMarker(location: LatLng) {
+    /* 
+     used to draw currnt location marker
+     */
     this.map.addMarker({
-        title: 'My Marker',
-        icon: {
-          'url': 'assets/home.png'
-        },
+        title: 'Currnt location',
+        icon:{
+          'url': 'assets/Arrow_1.png',
+      
+        size:{
+          width:48,
+          height:48
+        }
+      }
+      ,
         animation: 'DROP',
         position: location,
+        
 
       })
       .then(marker => {
+        marker.showInfoWindow();
         marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
           alert('Marker Clicked');
+        });
+      });
+  }
+  addMarker2(data) {
+    /* 
+     used to draw currnt location marker
+     */
+
+
+
+    this.map.addMarker({
+        draggable :true,
+        disableAutoPan :true,
+        icon:{
+          'url': 'assets/Home_5.png',
+      
+        size:{
+          width:48,
+          height:48
+        }
+      }
+      ,
+        animation: 'DROP',
+        position: {
+          lat: data.location[0],
+          lng: data.location[1]
+        },
+        
+
+      })
+      .then(marker => {
+       // marker.showInfoWindow();
+        this.total_markers.push(marker);
+        marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+         /*  this.map.animateCamera({
+            target: { lat: marker.getPosition().lat, lng: marker.getPosition().lng },
+            duration: 300,
+           // padding: 0  // default = 20px
+          }); */
+          let frame : HTMLElement = document.createElement('div');
+console.log(this.dataService.result[data.key].img0);
+
+frame.innerHTML = [
+  '<div class="html-info-window">',
+  '<ul>',
+  '<li>',
+  '<img src=' + this.dataService.result[data.key].img0+'></img>',
+  '<h5>'+this.dataService.result[data.key].price+ ' USD</h5>',
+  '<p>'+this.dataService.result[data.key].renterType +'</p>',
+  '<p>'+this.dataService.result[data.key].bedroom+' bedroom</p>',
+  '<p>'+this.dataService.result[data.key].typeOfApartment +'</p>',
+  '</li>',
+  '</ul>',
+  '</div>'
+  //'<h5 style="padding:0, margin:0;">Hearts Castel </h5>',
+  //'<img style="height:80px; width:110px; border:1px solid #dedede;"src=' + this.dataService.result[data.key].img0+'></img>'
+].join('');
+ frame.getElementsByTagName('img')[0].addEventListener('click',()=>{
+  this.htmlInfoWindow.setBackgroundColor('red');
+}); 
+this.htmlInfoWindow.setContent(frame,{width:'200px',height:'100px',margin:'0px'});
+            this.htmlInfoWindow.open(marker);
         });
       });
   }
@@ -210,12 +294,16 @@ export class HomePage {
 
   }
   onSearchCancel() {
-    this.autocomplete.input = "";
-    this.autocompleteItems = [];
+    this.onSearchClear();
   }
   onSearchClear() {
-    this.autocomplete.input = "";
+    this.autocomplete.input = ""; // clear the the search input 
     this.autocompleteItems = [];
+    this.dataService.clearNearByPlaces();
+    this.total_markers.forEach((marker)=>{
+     marker.remove();
+    });
+    this.total_markers = [];
   }
 
   selectSearchResult(item: google.maps.places.AutocompletePrediction) {
@@ -261,19 +349,38 @@ export class HomePage {
     // })
     // });
   }
+  
+  
+
+  /** addToGeoFire()
+   * adds location of the Add post to geofire location at '/map'
+   * TODO: pass data 
+   */
+  
   addToGeoFire() {
     // this.dataService.addToGeoFire({
     //   lat: this.locationPos.lat,
     //   lng: this.locationPos.lng
     // });
   }
-
+/* *
+ *@param postion of search focus
+ */
   search(centerPos: LatLng) {
+     this.loader= this.loadCtrl.create();
+     this.loader.present();
+     this.total_markers = [];
+     this.dataService.result = [];
     this.dataService.search(centerPos, this.searchRadius);
   }
 
   setting(){
     this.navCtrl.push(SettingsPage);
+  }
+  showList(){
+    console.log('ShowList');
+    
+    this.navCtrl.push(ListingsPage,{});
   }
 
   addCircle(ILatLng) {
@@ -303,12 +410,16 @@ export class HomePage {
 
     //this.circleArray.push(circle);
   }
-
+/* * addCluster()
+ *
+ * defines the min and max number of markers in a cluster and their icon properties
+ * 
+ */
 addCluster(){
  let markerCluster: MarkerCluster =  this.map.addMarkerClusterSync({
     boundsDraw: false,
-    markers: this.dataService.dummyData(),
-    icons: [
+    markers: this.dataService.dummyData(), // marker options 
+    icons: [ //icon propertieds for each cluster
         {min: 2, max: 100, url: "assets/filled-circle.png", anchor: {x: 16, y: 16}, label: {
           color: "white"
        }
@@ -326,12 +437,184 @@ addCluster(){
         }}
     ]
   });
+  
+  
+  
+  
   markerCluster.on((GoogleMapsEvent.MARKER_CLICK)).subscribe((params)=>{
+   /**
+   * sets marker click properties 
+   * @param comes is marker options fetched from dataService
+   */
     let marker: Marker = params[1];
-    marker.setTitle(marker.get("name"));
-    marker.setSnippet(marker.get("address"));
-    marker.showInfoWindow();
+    
+    marker.setTitle("350usd");
+    marker.setSnippet('appartment,2bed room');
+    marker.setIcon({ 
+      url: 'assets/Home_5.png',
+      size: {
+          width: 48,
+          height: 48
+      }
+      
+ });
+
+  marker.addEventListener(GoogleMapsEvent.INFO_CLICK).subscribe(()=>{
+    alert('click')
+  });
+   marker.showInfoWindow();
   });
 }
+addCluster2(){
+  
+  this.map.addMarkerCluster({
+     boundsDraw: false,
+     markers: [], // marker options 
+     icons: [ //icon propertieds for each cluster
+         {min: 4, max: 100, url: "assets/filled-circle.png", anchor: {x: 16, y: 16}, label: {
+           color: "white"
+        }
+       },
+         {min: 100, max: 1000, url: "assets/filled-circle.png", anchor: {x: 16, y: 16}, label: {
+           color: "white"
+         }},
+         { min: 1000, max: 2000, url: "assets/filled-circle.png", anchor: {x: 24, y: 24},
+         label: {
+           color: "white"
+         }
+       },
+         {min: 2000, url: "assets/filled-circle.png",anchor: {x: 32,y: 32}, label: {
+           color: "white"
+         }}
+     ]
+   }).then((cluster)=>{
+     this.markerCluster2 = cluster;
+    this.markerCluster2.on(GoogleMapsEvent.MARKER_CLICK).subscribe((params)=>{
+     let marker: Marker = params[1];
+     let x = 0;
+          let canvas = [];
+          canvas[x] = document.createElement('canvas');
+					canvas[x].width = 180;
+          canvas[x].height = 90;
+          var context = canvas[x].getContext('2d');
+         // function loadCanvas(imgUrl) {
+            var img = new Image();
+            img.onload =  function (){
+             context.drawImage(this, 0, 0,50,50);
+            }
+            img.src =  'https://firebasestorage.googleapis.com/v0/b/test-bc7e2.appspot.com/o/-LJ9LWmUDEbA65kwQB2O%2FimageName307072.9916461514?alt=media&token=3e0d6072-f613-4995-8f0a-1507638ab25f';
+         // }
+				
 
+          
+          
+       // make ajax call to get image data url
+    /*  var request = new XMLHttpRequest();
+      request.open('GET', 'https://firebasestorage.googleapis.com/v0/b/test-bc7e2.appspot.com/o/-LJ9LWmUDEbA65kwQB2O%2FimageName307072.9916461514?alt=media&token=3e0d6072-f613-4995-8f0a-1507638ab25f', true);
+      request.onreadystatechange = function() {
+        // Makes sure the document is ready to parse.
+    
+          // Makes sure it's found the file.
+          if(request.status == 200) {
+            console.log('request 200');
+            
+           // img.src=request.responseText;
+            loadCanvas(request.responseText);
+          }
+      
+      };
+      request.send(null);*/
+
+    
+
+   //	img.src = "https://firebasestorage.googleapis.com/v0/b/test-bc7e2.appspot.com/o/-LJ9LWmUDEbA65kwQB2O%2FimageName307072.9916461514?alt=media&token=3e0d6072-f613-4995-8f0a-1507638ab25f";
+     //img.src = 'assets/profile.png';
+     context.font = 'bolder 10pt arial';
+     context.fillStyle = 'black';
+     context.fillText( 12 , 70, 15);
+     
+     context.font = '8pt arial';
+     context.fillStyle = 'black';
+     context.fillText( 12 , 70, 30);
+     //context.drawImage(img, 0, 0,50,50);
+     context.font = '8pt arial';
+     context.fillStyle = 'black';
+     context.fillText(12 , 70, 45);
+     //          context.font = '8pt arial';
+     context.fillStyle = 'black';
+     context.fillText( 12 , 70, 60);
+     marker.setTitle(canvas[x].toDataURL());
+     })
+    
+      console.log("Near by places length =>" + this.dataService.getNearByplaces().length);
+      
+     this.dataService.getNearByplaces().forEach(item => {
+      this.createMarker(item,"");
+    });
+    this.loader.dismiss();
+
+   });
+ }
+ createMarker(m: any, needToPush) {
+          console.log(m);
+         
+          
+let icon = {
+    url: 'assets/Home_5.png',
+    // This marker is 32 pixels wide by 32 pixels high.
+    size: {
+      width: 48,
+      height: 48
+    },
+    // The origin for this image is (0, 0).
+    origin: {
+      x: 0,
+      y: 0
+    },
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    anchor: {
+      x: 16,
+      y: 32
+    }
+  };
+  let marker = {
+   // title: canvas[x].toDataURL(),
+    icon: icon,
+    position: {
+      lat: m.location[0],
+      lng: m.location[1]
+    }
+  }
+  marker["meta"] = m;
+  this.map.addMarker(marker).then((marker) => {
+    marker.on(GoogleMapsEvent.MARKER_CLICK)
+      .subscribe((markerClickEvent) => {
+        console.log("MARKER_CLICK");
+      /*  this._ngZone.run(() => {
+          let marker: Marker = markerClickEvent.pop();
+          this.onMarkerClick(marker);
+        });*/
+
+      });
+  });
+  this.total_markers.push(marker);
+ 
+ // this.markerCluster2.addMarker(marker);
+  
+  
+}
+
+onMarkerClick(marker: Marker) {
+  var data = marker.get("meta");
+  this.map.animateCamera({
+    target: { lat: marker.getPosition().lat, lng: marker.getPosition().lng },
+    duration: 300,
+    padding: 0  // default = 20px
+  });
+  marker.setSnippet("this marker clicked");
+  marker.setTitle("Marker");
+  
+
+  marker.showInfoWindow();
+}
 }

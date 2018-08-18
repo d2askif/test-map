@@ -1,5 +1,6 @@
 export class place {
      public price:number;
-     public lat;
-     public lng;
+     public location:{lat:number,lng:number};
+     public renterTyype:string;
+     public placeType:string;
 }

@@ -1,5 +1,5 @@
-<ion-header >
-  <ion-navbar style="z-index:10px">
+<!-- <ion-header >
+  <ion-navbar style="z-index:0">
       <button ion-button icon-only menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
@@ -14,43 +14,55 @@
     </ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
-    <ion-searchbar  [(ngModel)]="autocomplete.input" showCancelButton="true" (ionInput)="updateSearchResults($event)" id='searchInput'
-      (ionCancel)="onSearchCancel()" (ionClear)="onSearchClear()"></ion-searchbar>
+   
   </ion-toolbar>
 
-</ion-header>
+</ion-header>  -->
 
 <ion-content>
 
-
-
-
   
-  <!-- <ion-toolbar>
-    <ion-searchbar  [(ngModel)]="autocomplete.input"  showCancelButton="true" (ionInput)="updateSearchResults($event)" id='searchInput' (ionCancel)="onSearchCancel()" (ionClear)="onSearchClear()"></ion-searchbar>
-  </ion-toolbar> -->
-  <ion-list *ngIf="autocompleteItems.length > 0" margin-right>
-    <ion-item>
-      <ion-icon small item-start name="navigate"></ion-icon>
-
-      <ion-label> Current location</ion-label>
-    </ion-item>
-    <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
-      <ion-icon small item-start name="pin"></ion-icon>
-      <ion-label> {{ item.description }}</ion-label>
-
-    </ion-item>
-  </ion-list>
 
 
   
   <div #map id="map">
-      <ion-fab bottom left>
-       
-          <button ion-fab (click)="logOut()">
-            <ion-icon name="add"></ion-icon>
-          </button>
+      <ion-searchbar  [(ngModel)]="autocomplete.input" showCancelButton="true" (ionInput)="updateSearchResults($event)" id='searchInput'
+      (ionCancel)="onSearchCancel()" (ionClear)="onSearchClear()"></ion-searchbar>
+      <ion-list *ngIf="autocompleteItems.length > 0" margin-right margin-left>
+          <ion-item>
+            <ion-icon small item-start name="navigate"></ion-icon>
       
-        </ion-fab>
+            <ion-label> Current location</ion-label>
+          </ion-item>
+          <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectSearchResult(item)">
+            <ion-icon small item-start name="pin"></ion-icon>
+            <ion-label> {{ item.description }}</ion-label>
+      
+          </ion-item>
+        </ion-list>
+      
   </div>
+
+      <ion-fab *ngIf = "total_markers.length >0" middle right mini>
+          <button ion-fab color='danger' (click)="showList()">
+              <ion-icon name="list-box" ></ion-icon>
+          </button>
+        </ion-fab>
+        <ion-fab *ngIf = "total_markers.length >0" middle right mini>
+            <button ion-fab color='danger' (click)="showList()">
+                <ion-icon name="list-box" ></ion-icon>
+            </button>
+          </ion-fab>
+        
+        <!-- <ion-list *ngIf="showListFormFlag == true">
+          <ion-item>
+            <ion-thumbnail item-start>
+              <img src="assets/profile.png">
+            </ion-thumbnail>
+            <h2>My Neighbor Totoro</h2>
+            <p>Hayao Miyazaki • 1988</p>
+            <button ion-button clear item-end>View</button>
+          </ion-item>
+        </ion-list> -->
+  
 </ion-content>

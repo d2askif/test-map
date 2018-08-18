@@ -6,6 +6,7 @@ import { HomeMapPage } from '../home-map/home-map';
 import { AddPlacePage } from '../add-place/add-place';
 import { HomePage } from '../home/home';
 import { ListingsPage } from '../listings/listings';
+import { ProfilePage } from '../profile/profile';
 
 @Component({
   selector: 'page-tabs',
@@ -14,6 +15,6 @@ import { ListingsPage } from '../listings/listings';
 export class TabsPage {
   homeMapPage = HomePage;
   addPlace = AddPlacePage;
-  listingsPage= ListingsPage;
+  profilePage= ProfilePage;
 
 }
