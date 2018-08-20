@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DataService } from '../../services/data.service';
+import { DetailPage } from '../detail/detail';
 
 /**
  * Generated class for the ListingsPage page.
@@ -26,6 +27,9 @@ export class ListingsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListingsPage');
+  }
+  showDetail(item) {
+    this.navCtrl.push(DetailPage,{'item':item});
   }
 
 }

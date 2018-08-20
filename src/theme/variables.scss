@@ -34,26 +34,29 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #14aaf5,
   secondary:  #32db64,
   danger:     tomato,
   light:      #f4f4f4,
-  dark:       #222,
+  dark:       #646f79,
   white-transparent: rgba(255,255,255, 0.2),
   black-transparent: rgba(0,0,0, 0.2),
   white:      #fff
 );
 
-$text-input-placeholder-color:#dedede;
+$text-input-placeholder-color:#646f79;
+
+// fab button size
+$fab-mini-size:40px;
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
 
-$label-ios-text-color:#dedede;
-$tabs-ios-tab-icon-color:white;
-$tabs-ios-tab-icon-color-active:white;
+$label-ios-text-color:#646f79;
+$tabs-ios-tab-icon-color:#848f99;
+$tabs-ios-tab-icon-color-active:#fcbd01;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -63,11 +66,10 @@ $searchbar-md-background-color : rgba(255, 255, 255, 0);
 $searchbar-md-input-box-shadow:0 2px 2px 0 rgba(0, 0, 0, .14);
 
 $text-input-md-show-focus-highlight:        false !default;
-$label-md-text-color:#dedede;
+$label-md-text-color:#646f79;
 
-
-$tabs-md-tab-icon-color:#888;
-$tabs-md-tab-icon-color-active:white; 
+$tabs-md-tab-icon-color:#848f99;
+$tabs-md-tab-icon-color-active:#fcbd01; 
 
 /// @prop - Show the valid highlight when it is valid and has a value
 $text-input-md-show-valid-highlight:        $text-input-md-show-focus-highlight !default;

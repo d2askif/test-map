@@ -12,10 +12,10 @@ page-add-place {
     // }
 
     .select-md .select-icon .select-icon-inner{
-        color:#dedede;
+        columns: #676f79;;
     }
    .select-md .select-placeholder  {
-       color:#dedede;
+       color:#676f79;
    }
     ion-select.myCustomSelect{
         width: 100% ;
@@ -42,8 +42,10 @@ page-add-place {
             border:2px solid #dedede;
         }
     }
-    .input { padding: 0; margin: 0; 
-        color:#fff;
+    .input { 
+        padding: 0;
+        margin: 0; 
+        color:#646f79;
     }
     // make the form adjust to the full width
     form {
@@ -61,7 +63,8 @@ page-add-place {
     // adds the soothing gradient to the background of the page
         .content {
             overflow: hidden;
-            background: linear-gradient(270deg, rgb(251, 173, 80), rgb(233, 89, 80), rgb(73, 102, 215));    
+            background: #f6f8f9;
+          /*   background: linear-gradient(270deg, rgb(251, 173, 80), rgb(233, 89, 80), rgb(73, 102, 215));  */   
             background-size: 1200% 100%;
            -webkit-animation: MovingBackground 60s ease infinite;
            -moz-animation: MovingBackground 60s ease infinite;
@@ -78,8 +81,8 @@ page-add-place {
          padding-left:16px;
          border:0px solid #fff;
          border-radius: 4px;
-         background-color: color($colors, white-transparent, base);  
-         color:#fff;
+         background-color: #fff;
+        // background-color: color($colors, white-transparent, base);  
          margin-bottom:4px;
      }
     .selector-class {

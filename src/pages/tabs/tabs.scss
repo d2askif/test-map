@@ -1,5 +1,8 @@
 page-tabs {
+    .tabs-md .tabbar {
+        background: #f6f8f9;
+    }
     .tab-item.tab-item-active, .tab-item.active, .tab-item.activated {
-        color: red;
+       
     }
 }
