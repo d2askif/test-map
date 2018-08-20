@@ -51,6 +51,7 @@ import {
 } from '../../models/place';
 import { SettingsPage } from '../settings/settings';
 import { ListingsPage } from '../listings/listings';
+import { DetailPage } from '../detail/detail';
 declare var google: any;
 @Component({
   selector: 'page-home',
@@ -79,6 +80,7 @@ export class HomePage {
   private searchRadius: number;
   private circleArray: Array < Circle > ;
   private circle: Circle;
+  private zoomLavel = 11;
 
   GoogleAutocomplete: any;
   autocomplete: any;
@@ -123,14 +125,14 @@ export class HomePage {
               mapToolbar: true
               
             },
-            styles: [{"stylers": [{ "saturation": -100 }]}],
+            styles: [{"stylers": [{ "saturation": -20 }]}],
 
             camera: {
               target: myLocation.latLng
             }
           }
           this.map = GoogleMaps.create(this.mapElement.nativeElement, mapOptions)
-          this.map.setCameraZoom(13);
+          this.map.setCameraZoom(this.zoomLavel);
           this.map.setCameraTarget(myLocation.latLng);
           this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
 
@@ -211,8 +213,11 @@ export class HomePage {
     this.map.addMarker({
         draggable :true,
         disableAutoPan :true,
+        
         icon:{
-          'url': 'assets/Home_5.png',
+          'url': 'assets/Home_7.png',
+          
+           
       
         size:{
           width:48,
@@ -245,7 +250,7 @@ frame.innerHTML = [
   '<ul>',
   '<li>',
   '<img src=' + this.dataService.result[data.key].img0+'></img>',
-  '<h5>'+this.dataService.result[data.key].price+ ' USD</h5>',
+  '<h5>'+ this.dataService.result[data.key].price+ ' USD</h5>',
   '<p>'+this.dataService.result[data.key].renterType +'</p>',
   '<p>'+this.dataService.result[data.key].bedroom+' bedroom</p>',
   '<p>'+this.dataService.result[data.key].typeOfApartment +'</p>',
@@ -255,8 +260,8 @@ frame.innerHTML = [
   //'<h5 style="padding:0, margin:0;">Hearts Castel </h5>',
   //'<img style="height:80px; width:110px; border:1px solid #dedede;"src=' + this.dataService.result[data.key].img0+'></img>'
 ].join('');
- frame.getElementsByTagName('img')[0].addEventListener('click',()=>{
-  this.htmlInfoWindow.setBackgroundColor('red');
+ frame.getElementsByTagName('div')[0].addEventListener('click',()=>{
+   this.navCtrl.push(DetailPage,{'item':this.dataService.result[data.key]});
 }); 
 this.htmlInfoWindow.setContent(frame,{width:'200px',height:'100px',margin:'0px'});
             this.htmlInfoWindow.open(marker);
@@ -317,7 +322,7 @@ this.htmlInfoWindow.setContent(frame,{width:'200px',height:'100px',margin:'0px'}
       .then((results: GeocoderResult[]) => {
         console.log(results);
         this.locationPos = new LatLng(results[0].position.lat, results[0].position.lng);
-        this.map.setCameraZoom(13);
+        this.map.setCameraZoom(this.zoomLavel);
         //this.map.addCircleSync({location:})
         this.map.setCameraTarget(this.locationPos);
         this.search(this.locationPos);
@@ -451,7 +456,7 @@ addCluster(){
     marker.setTitle("350usd");
     marker.setSnippet('appartment,2bed room');
     marker.setIcon({ 
-      url: 'assets/Home_5.png',
+      url: 'assets/Home_6.png',
       size: {
           width: 48,
           height: 48
@@ -560,7 +565,7 @@ addCluster2(){
          
           
 let icon = {
-    url: 'assets/Home_5.png',
+    url: 'assets/Home_6.png',
     // This marker is 32 pixels wide by 32 pixels high.
     size: {
       width: 48,

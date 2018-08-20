@@ -7,6 +7,7 @@ import { AddPlacePage } from '../add-place/add-place';
 import { HomePage } from '../home/home';
 import { ListingsPage } from '../listings/listings';
 import { ProfilePage } from '../profile/profile';
+import { DetailPage } from '../detail/detail';
 
 @Component({
   selector: 'page-tabs',

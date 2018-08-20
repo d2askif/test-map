@@ -13,6 +13,46 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+    <ion-slides pager>
+        <ion-slide *ngFor="let slide of slides">
+          
+          <img [src]="slide" class="slide-image"/>
+          
+        </ion-slide>
+       
+      </ion-slides>
+      <ion-list>
+          <ion-list-header>
+              Detail info
+          </ion-list-header>
+          <ion-item>
+              <ion-icon name='ios-cash-outline' item-left></ion-icon>
+              Price
+              <ion-badge item-right>{{item.price}} USD</ion-badge>
+          </ion-item>
+          <ion-item>
+              <ion-icon name="ios-people-outline" item-left></ion-icon>
+              Prefernce
+              <ion-badge item-right>{{item.renterType}}</ion-badge>
+          </ion-item>
+          <ion-item>
+              <ion-icon  name="ios-home-outline" item-left></ion-icon>
+              Type
+              <ion-badge item-right>{{item.typeOfApartment}}</ion-badge>
+          </ion-item>
+          <ion-item>
+              <ion-icon name="ios-barcode-outline" item-left></ion-icon>
+              Bedroms
+              <ion-badge item-right>{{item.bedroom}}</ion-badge>
+          </ion-item>
+          <ion-item>
+              <ion-icon name="ios-pin-outline" item-left></ion-icon>
+              Address
+              <ion-note item-right>
+                {{item.adress}}
+              </ion-note>
+          </ion-item>
+      </ion-list>
 
 </ion-content>

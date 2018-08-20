@@ -15,7 +15,7 @@
 
 <ion-content>
    <ion-list >
-          <ion-item lines *ngFor=" let item of arrayOfResult">
+          <button ion-item detail-none lines *ngFor=" let item of arrayOfResult" (click)="showDetail(item)">
             <ion-thumbnail item-start>
               
               <img [src]="item.img0">
@@ -24,7 +24,7 @@
             <p class="list"><ion-icon name="ios-people-outline"></ion-icon> {{item.renterType}} <ion-icon   style='margin-left: 32px' name="ios-home-outline"></ion-icon> {{item.typeOfApartment}}</p>
             <p class="list"><ion-icon name="ios-barcode-outline"></ion-icon> {{item.bedroom  }} bed room <ion-icon   style='margin-left: 8px' name="ios-pin-outline"></ion-icon> {{item.adress.split(',')[0]}}</p>
             
-          </ion-item>
+          </button>
         </ion-list>
 
 </ion-content>

@@ -71,7 +71,7 @@
     <ion-toolbar transparent
                  text-center>
   
-                 <h3 style="color:#fff">Add a place</h3>
+                 <h3 style="columns: #151b26;">Add a place</h3>
   
     </ion-toolbar>
   </ion-header>
@@ -83,7 +83,7 @@
         <ion-row>
           <ion-col col-6>
               <ion-item no-lines id="round-item">
-                  <ion-label  color="white"><ion-icon color="white" name="ios-person-outline" item-left></ion-icon> </ion-label>
+                  <ion-label  color="dark"><ion-icon color="dark" name="ios-person-outline" item-left></ion-icon> </ion-label>
                 <ion-input class="input" require ngModel type="number" placeholder="price" name="price"></ion-input>
                 </ion-item>
           </ion-col>
@@ -108,7 +108,7 @@
             <ion-col>
                 <ion-list no-lines>
                     <ion-item>
-                    <ion-label><ion-icon color="white" name="pin" item-left></ion-icon></ion-label>
+                    <ion-label color="dark"><ion-icon color="dark" name="pin" item-left></ion-icon></ion-label>
                     <ion-input ngModel required placeholder="address" type="text" id="address" 
                     name="address"></ion-input>
                   </ion-item>
@@ -119,7 +119,7 @@
 
 <ion-list no-lines class="selector-class">
     <ion-item>
-        <ion-label color="#dedede">Bed room</ion-label>
+        <ion-label color="#646f79">Bed room</ion-label>
         <ion-select required ngModel name="bedroom">
           <ion-option value="1">1</ion-option>
           <ion-option value="2">2</ion-option>
@@ -129,7 +129,7 @@
       </ion-item>
 
   <ion-item>
-    <ion-label color="#dedede">Type</ion-label>
+    <ion-label color="#234535">Type</ion-label>
     <ion-select required ngModel name="renterType">
       <ion-option value="female">Female</ion-option>
       <ion-option value="male">Male</ion-option>
@@ -150,7 +150,8 @@
   <ion-item>
     <button
        ion-text
-       style="color:#fff"
+       
+       style="color:#646f79;"
        block
        text-center
        strong
@@ -203,10 +204,10 @@
   </div>
  
 
-<button  block   color="white"  outline ion-button type="submit" [disabled]="!f.valid">Add</button>
+<button  block   color="primary"   ion-button type="submit" [disabled]="!f.valid">Add</button>
 </ion-list>
 
-<ion-chip>
+<!-- <ion-chip>
     <ion-label style="width:40px; text-align:center;" color="secondary">1</ion-label>
   </ion-chip>
   <ion-chip>
@@ -214,7 +215,7 @@
     </ion-chip>
     <ion-chip>
         <ion-label style="width:40px; text-align:center;" color="secondary">2+</ion-label>
-      </ion-chip>
+      </ion-chip> -->
     
 
         </form>

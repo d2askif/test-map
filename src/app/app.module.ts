@@ -24,6 +24,7 @@ import { Camera } from '@ionic-native/camera';
 import { Crop } from '@ionic-native/crop';
 import { ProfilePage } from '../pages/profile/profile';
 import { EditProfilePage } from '../pages/edit-profile/edit-profile';
+import { DetailPage } from '../pages/detail/detail';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
     ListingsPage,
     SettingsPage,
     ProfilePage,
-    EditProfilePage
+    EditProfilePage,
+    DetailPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
     ListingsPage,
     SettingsPage,
     ProfilePage,
-    EditProfilePage
+    EditProfilePage,
+    DetailPage
   ],
   providers: [
     StatusBar,
