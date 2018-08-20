@@ -1,4 +1,5 @@
 page-settings {
+    /* fix the search radius range slector */
     .top{
          .list-header-md{
                 padding-bottom: 0 !important;
@@ -19,5 +20,19 @@ page-settings {
     }
   
     }
-
+    /* set color for ion-selector selected option text color */
+    .select-text{
+        color:#aaa;
+    }
+    /* drop down icon color*/
+    .select-md .select-icon .select-icon-inner{
+        columns: #aaa;;
+    }
+    .item-md {
+        color:#676f79;
+    }
+    .header-text{
+        color:#fcbd01;
+        font-size: 14px;
+    }
 }

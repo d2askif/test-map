@@ -9,7 +9,8 @@ import {
   NavController,
   AlertController,
   LoadingController,
-  ToastController
+  ToastController,
+  ModalController
 } from "ionic-angular";
 import {
   Geolocation,
@@ -87,7 +88,8 @@ export class HomePage {
   autocompleteItems: any;
   total_markers=[];
   htmlInfoWindow =  new HtmlInfoWindow();
-  constructor(private alertCtr: AlertController,
+  constructor(
+    private alertCtr: AlertController,
     private zone: NgZone,
     private platform: Platform,
     public navCtrl: NavController,
@@ -95,7 +97,8 @@ export class HomePage {
     private authService: AuthService,
     private dataService: DataService,
     private loadCtrl: LoadingController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    private modalCtrl:ModalController) {
     this.autocomplete = {
       input: ''
     };
@@ -380,7 +383,12 @@ this.htmlInfoWindow.setContent(frame,{width:'200px',height:'100px',margin:'0px'}
   }
 
   setting(){
-    this.navCtrl.push(SettingsPage);
+    let modal = this.modalCtrl.create(SettingsPage);
+    modal.onDidDismiss((searchParams)=>{
+    
+    })
+    modal.present();
+    //this.navCtrl.push(SettingsPage);
   }
   showList(){
     console.log('ShowList');
